@@ -8,7 +8,22 @@
 
 #import "LSIEmployee.h"
 
+@interface LSIEmployee()
+
+@property (nonatomic, copy) NSString *privateName;
+
+@end
+
 @implementation LSIEmployee
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _privateName = @"Hair Force One";
+    }
+    return self;
+}
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"%@, Title: %@, Salary: %li", self.name, self.jobTitle, self.salary];

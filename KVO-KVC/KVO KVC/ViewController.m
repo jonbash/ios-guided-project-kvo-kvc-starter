@@ -18,6 +18,7 @@
 
 @end
 
+
 @implementation ViewController
 
 - (void)viewDidLoad {
@@ -67,7 +68,39 @@
     
     NSLog(@"%@", self.hrController);
     
-    
+    // KEY VALUE CODING: KVC
+    // * Core Data
+    // * Cocoa Bindings (UI + Model = SwiftUI)
+
+    // @property NSString *name; // Properties automatically KVC-compliant
+
+    /*
+     1. Accessor for a prop
+        - (NSString *)name;
+     2. setter for prop
+        - (void)setName:(NSString *)name;
+     3. Instance variable to set
+
+     modify data using self.name syntax (not _name)
+     1. init/dealloc always use: _name =
+     2. normal methods always use self.name =
+     */
+
+    // property accessor
+    NSString *name = [craig name]; // or craig.name
+    // compile-time checking for valid properties
+    // eg `[craig nameddd]` won't even compile
+    NSLog(@"Name: %@", name);
+
+    // dynamic method call - look up methods and call them via NSString name
+
+    NSString *name2 = [craig valueForKey:@"name"];
+    NSLog(@"Name 2: %@", name2); // works just like more typesafe property accessor
+
+//    NSString *name3 = [craig valueForKey:@"firstName"];
+//    NSLog(@"Name 3: %@", name3); // uh oh!! crash! not KVC-compliant
+    NSString *name3 = [craig valueForKey:@"privateName"];
+    NSLog(@"Name 3: %@", name3); // works; accesses a private property
 }
 
 

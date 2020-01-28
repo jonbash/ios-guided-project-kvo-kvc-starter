@@ -30,7 +30,7 @@
 }
 
 - (NSArray<LSIEmployee *> *)employees {
-    return [[self.internalEmployees copy] arrayByAddingObject:self.manager];
+    return [self.internalEmployees arrayByAddingObject:self.manager];
 }
 
 - (NSString *)description {
