@@ -101,6 +101,36 @@
 //    NSLog(@"Name 3: %@", name3); // uh oh!! crash! not KVC-compliant
     NSString *name3 = [craig valueForKey:@"privateName"];
     NSLog(@"Name 3: %@", name3); // works; accesses a private property
+
+    [craig setValue:@"Bob" forKey:@"name"];
+    NSLog(@"changed name: %@", craig.name);
+
+    // spelling very important
+    // types must match
+
+    //: ## collections and keypaths
+    
+    NSLog(@"Departments1: %@", self.hrController.departments);
+
+    // keypath
+    NSLog(@"Departments2: %@", [self.hrController valueForKeyPath:@"departments"]); // same as 1
+
+    // goal: print all department names & employees
+    NSLog(@"department names: %@", [self.hrController valueForKeyPath:@"departments.name"]);
+    // sorta like array.map, giving us equivalent of [[Employee]] in Swift
+    NSLog(@"employees: %@", [self.hrController valueForKeyPath:@"departments.employees"]);
+
+    //: ## collection operators
+
+    // goal: [Employee]
+    // @distinctUnionOfArrays = all unique values
+    NSArray<LSIEmployee *> *allEmployees = [self.hrController valueForKeyPath:@"departments.@distinctUnionOfArrays.employees"];
+    NSLog(@"Department Employees: %@", allEmployees);
+
+    NSArray *employeeSalaries = [allEmployees valueForKeyPath:@"salary"];
+    NSLog(@"Salaries: %@", employeeSalaries);
+    NSLog(@"Max salary: %@", [allEmployees valueForKeyPath:@"@max.salary"]);
+    NSLog(@"Average salary: %@", [allEmployees valueForKeyPath:@"@avg.salary"]);
 }
 
 
